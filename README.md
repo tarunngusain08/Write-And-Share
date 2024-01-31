@@ -2,7 +2,8 @@
 
 ## Project Overview
 
-You have been tasked with building a secure and scalable RESTful API to manage notes. Users should be able to perform CRUD operations on notes, share them, and search for notes based on keywords.
+Building a secure and scalable RESTful API to manage notes. 
+Users should be able to perform CRUD operations on notes, share them, and search for notes based on keywords.
 
 ### Technical Requirements
 
