@@ -50,8 +50,13 @@ func init() {
 	loginRepo := repo.NewLoginRepo(DB)
 	loginService := service.NewLoginService(loginRepo)
 	loginHandler := handlers.NewLoginHandler(loginService)
+	
+	getNotesRepo := repo.NewGetNotesRepo(DB)
+	getNotesService := service.NewGetNotesRepo(getNotesRepo)
+	getNotesHandler := handlers.NewGetNotesHandler(getNotesService)
 
 	handler = new(Handler)
 	handler.SignUpHandler = signUpHandler
 	handler.LoginHandler = loginHandler
+	handler.GetNotesHandler = getNotesHandler
 }
