@@ -3,6 +3,7 @@ package main
 import (
 	"Write-And-Share/handlers"
 	"Write-And-Share/repo"
+	"Write-And-Share/service"
 	"database/sql"
 	"fmt"
 )
@@ -18,6 +19,7 @@ var handler *Handler
 type Handler struct {
 	*handlers.SignUpHandler
 	*handlers.LoginHandler
+	*handlers.GetNotesHandler
 }
 
 func initDB() (*sql.DB, error) {
@@ -46,7 +48,8 @@ func init() {
 	signUpHandler := handlers.NewSignUpHandler(signUpRepo)
 
 	loginRepo := repo.NewLoginRepo(DB)
-	loginHandler := handlers.NewLoginHandler(loginRepo)
+	loginService := service.NewLoginService(loginRepo)
+	loginHandler := handlers.NewLoginHandler(loginService)
 
 	handler = new(Handler)
 	handler.SignUpHandler = signUpHandler
