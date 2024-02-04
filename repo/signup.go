@@ -16,7 +16,7 @@ func NewSignUpRepo(db *sql.DB) *SignUpRepo {
 
 const signUp = `INSERT INTO Users VALUES ($1, $2)`
 
-func (s *SignUpRepo) SignUp(details *contracts.UserDetails) error {
+func (s *SignUpRepo) SignUp(details *contracts.LoginRequest) error {
 	res, err := s.db.Exec(signUp, details.UserName, details.Password)
 	if err != nil {
 		return err
