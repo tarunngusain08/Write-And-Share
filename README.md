@@ -65,7 +65,7 @@ To design the database for the given project, we need to consider the entities i
 
 ### Authentication and Authorization:
 
-- Implement authentication using JWT (JSON Web Tokens) or OAuth2 for user login and token-based authentication.
+- Implement authentication using JWT (JSON Web Tokens) for user login and token-based authentication.
 - Use rate limiting and request throttling middleware to prevent abuse and protect against denial-of-service attacks.
 
 
