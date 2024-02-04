@@ -20,7 +20,7 @@ func NewSignUpHandler(signUpRepo *repo.SignUpRepo) *SignUpHandler {
 
 func (s *SignUpHandler) SignUp(ctx *gin.Context) {
 
-	var details *contracts.UserDetails
+	var details *contracts.LoginRequest
 	body, err := ctx.Request.GetBody()
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, err)
