@@ -2,41 +2,41 @@ package handlers
 
 import (
 	"Write-And-Share/contracts"
-	"Write-And-Share/repo"
+	"Write-And-Share/service"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
 type LoginHandler struct {
-	repo *repo.LoginRepo
+	*service.LoginService
 }
 
-func NewLoginHandler(loginRepo *repo.LoginRepo) *LoginHandler {
+func NewLoginHandler(loginService *service.LoginService) *LoginHandler {
 	return &LoginHandler{
-		repo: loginRepo,
+		loginService,
 	}
 }
 
 func (l *LoginHandler) Login(ctx *gin.Context) {
-	var details *contracts.UserDetails
+	var user *contracts.LoginRequest
 	body, err := ctx.Request.GetBody()
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, err)
 		return
 	}
 
-	err = json.NewDecoder(body).Decode(&details)
+	err = json.NewDecoder(body).Decode(&user)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, err)
 		return
 	}
 
-	err = l.repo.Login(details)
+	token, err := l.LoginService.Login(user)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err)
 		return
 	}
 
-	ctx.JSON(http.StatusOK, "Success")
+	ctx.JSON(http.StatusOK, token)
 }
