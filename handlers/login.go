@@ -9,7 +9,7 @@ import (
 )
 
 type LoginHandler struct {
-	*service.LoginService
+	loginService *service.LoginService
 }
 
 func NewLoginHandler(loginService *service.LoginService) *LoginHandler {
@@ -32,7 +32,7 @@ func (l *LoginHandler) Login(ctx *gin.Context) {
 		return
 	}
 
-	token, err := l.LoginService.Login(user)
+	token, err := l.loginService.Login(user)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err)
 		return
