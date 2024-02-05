@@ -7,7 +7,7 @@ import (
 )
 
 type LoginRepo struct {
-	*sql.DB
+	db *sql.DB
 }
 
 func NewLoginRepo(db *sql.DB) *LoginRepo {
@@ -18,7 +18,7 @@ const login = `SELECT COUNT(*) FROM Users WHERE username = $1 AND password = $2`
 
 func (l *LoginRepo) Login(details *contracts.LoginRequest) error {
 	var count int
-	err := l.DB.QueryRow(login, details.UserName, details.Password).Scan(&count)
+	err := l.db.QueryRow(login, details.UserName, details.Password).Scan(&count)
 	if err != nil {
 		return err
 	}
