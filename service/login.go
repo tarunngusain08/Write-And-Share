@@ -8,7 +8,7 @@ import (
 )
 
 type LoginService struct {
-	*repo.LoginRepo
+	loginRepo *repo.LoginRepo
 }
 
 func NewLoginService(loginRepo *repo.LoginRepo) *LoginService {
@@ -18,7 +18,7 @@ func NewLoginService(loginRepo *repo.LoginRepo) *LoginService {
 }
 
 func (l *LoginService) Login(user *contracts.LoginRequest) (string, error) {
-	err := l.LoginRepo.Login(user)
+	err := l.loginRepo.Login(user)
 	if err != nil {
 		return "", err
 	}
