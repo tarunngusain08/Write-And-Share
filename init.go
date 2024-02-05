@@ -45,14 +45,15 @@ func init() {
 		panic(err)
 	}
 	signUpRepo := repo.NewSignUpRepo(DB)
-	signUpHandler := handlers.NewSignUpHandler(signUpRepo)
-
 	loginRepo := repo.NewLoginRepo(DB)
-	loginService := service.NewLoginService(loginRepo)
-	loginHandler := handlers.NewLoginHandler(loginService)
-
 	getNotesRepo := repo.NewGetNotesRepo(DB)
+
+	loginService := service.NewLoginService(loginRepo)
+	signUpService := service.NewSignupService(signUpRepo, loginService)
 	getNotesService := service.NewGetNotesRepo(getNotesRepo)
+	
+	signUpHandler := handlers.NewSignUpHandler(signUpService)
+	loginHandler := handlers.NewLoginHandler(loginService)
 	getNotesHandler := handlers.NewGetNotesHandler(getNotesService)
 
 	handler = new(Handler)
