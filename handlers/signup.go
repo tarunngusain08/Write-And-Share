@@ -2,19 +2,19 @@ package handlers
 
 import (
 	"Write-And-Share/contracts"
-	"Write-And-Share/repo"
+	"Write-And-Share/service"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
 type SignUpHandler struct {
-	repo *repo.SignUpRepo
+	signupService *service.SignupService
 }
 
-func NewSignUpHandler(signUpRepo *repo.SignUpRepo) *SignUpHandler {
+func NewSignUpHandler(signupService *service.SignupService) *SignUpHandler {
 	return &SignUpHandler{
-		repo: signUpRepo,
+		signupService: signupService,
 	}
 }
 
@@ -33,11 +33,11 @@ func (s *SignUpHandler) SignUp(ctx *gin.Context) {
 		return
 	}
 
-	err = s.repo.SignUp(details)
+	token, err := s.signupService.Signup(details)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err)
 		return
 	}
 
-	ctx.JSON(http.StatusOK, "Success")
+	ctx.JSON(http.StatusOK, token)
 }
