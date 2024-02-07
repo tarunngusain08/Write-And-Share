@@ -10,7 +10,6 @@ func main() {
 
 	limiter := ratelimit.NewBucketWithRate(100, 100)
 	limiter.Capacity()
-
 	r.Use(func(c *gin.Context) {
 		limiter.Wait(1)
 		c.Next()
