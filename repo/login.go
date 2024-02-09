@@ -14,7 +14,7 @@ func NewLoginRepo(db *sql.DB) *LoginRepo {
 	return &LoginRepo{db}
 }
 
-const login = `SELECT COUNT(*) FROM Users WHERE username = $1 AND password = $2`
+const login = `SELECT COUNT(*) FROM Users WHERE username = $1 AND password = $2;`
 
 func (l *LoginRepo) Login(details *contracts.LoginRequest) error {
 	var count int
