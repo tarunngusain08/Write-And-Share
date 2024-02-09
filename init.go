@@ -20,6 +20,9 @@ type Handler struct {
 	*handlers.SignUpHandler
 	*handlers.LoginHandler
 	*handlers.GetNotesHandler
+	*handlers.UpsertNoteHandler
+	*handlers.DeleteNoteHandler
+	*handlers.ShareNoteHandler
 }
 
 func initDB() (*sql.DB, error) {
@@ -51,7 +54,7 @@ func init() {
 	loginService := service.NewLoginService(loginRepo)
 	signUpService := service.NewSignupService(signUpRepo, loginService)
 	getNotesService := service.NewGetNotesRepo(getNotesRepo)
-	
+
 	signUpHandler := handlers.NewSignUpHandler(signUpService)
 	loginHandler := handlers.NewLoginHandler(loginService)
 	getNotesHandler := handlers.NewGetNotesHandler(getNotesService)
