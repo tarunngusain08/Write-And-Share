@@ -13,7 +13,7 @@ type UpsertNoteHandler struct {
 	service *service.UpsertNoteService
 }
 
-func NewCreateNoteHandler(notesService *service.UpsertNoteService) *UpsertNoteHandler {
+func NewUpsertNoteHandler(notesService *service.UpsertNoteService) *UpsertNoteHandler {
 	return &UpsertNoteHandler{
 		notesService,
 	}
