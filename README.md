@@ -10,7 +10,6 @@ Users should be able to perform CRUD operations on notes, share them, and search
 - Implement RESTful APIs.
 - Use a database for data storage (preferably MongoDB or PostgreSQL).
 - Implement any authentication protocol.
-- Write unit tests for API endpoints using a testing framework.
 
 ### Additional Requirements
 - Implement rate limiting and request throttling.
@@ -73,10 +72,3 @@ To design the database for the given project, we need to consider the entities i
 
 - Implement full-text indexing on the title and content fields of the Notes table for efficient keyword-based search.
 - Use PostgreSQL's built-in full-text search capabilities or MongoDB's text search feature for performing fast and accurate searches.
-
-
-### Testing:
-
-- Write unit tests for API endpoints using testing frameworks.
-- Test API functionality, including CRUD operations, authentication, authorization, and search functionality.
-
