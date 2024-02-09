@@ -14,9 +14,9 @@ func NewGetNotesRepo(db *sql.DB) *GetNotesRepo {
 	return &GetNotesRepo{db: db}
 }
 
-const getAllNotes = `SELECT title, content FROM notes_to_user_mapping n WHERE user_name = $1`
+const getAllNotes = `SELECT title, content FROM notes_to_user_mapping n WHERE user_name = $1;`
 
-const getNoteById = `SELECT title, content FROM notes_to_user_mapping WHERE user_name = $1 AND note_id = $2`
+const getNoteById = `SELECT title, content FROM notes_to_user_mapping WHERE user_name = $1 AND note_id = $2;`
 
 func (g *GetNotesRepo) GetAllNotes(request *contracts.GetNotesRequest) (*contracts.GetNotesResponse, error) {
 
