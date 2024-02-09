@@ -10,6 +10,7 @@ func main() {
 
 	limiter := ratelimit.NewBucketWithRate(100, 100)
 	limiter.Capacity()
+
 	r.Use(func(c *gin.Context) {
 		limiter.Wait(1)
 		c.Next()
@@ -28,5 +29,9 @@ func main() {
 		notes.POST("")
 		notes.GET("/:id", handler.GetNotesHandler.GetNotesById)
 		notes.GET("", handler.GetNotesHandler.GetAllNotes)
+		notes.POST("", handler.UpsertNoteHandler.UpsertNote)
+		notes.PUT("/:id", handler.UpsertNoteHandler.UpsertNote)
+		notes.DELETE("/:id", handler.DeleteNoteHandler.DeleteNote)
+		notes.POST("/:id/share", handler.ShareNoteHandler.ShareNote)
 	}
 }
