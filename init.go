@@ -51,20 +51,28 @@ func init() {
 	loginRepo := repo.NewLoginRepo(DB)
 	getNotesRepo := repo.NewGetNotesRepo(DB)
 	upsertNoteRepo := repo.NewUpsertNoteRepo(DB)
+	deleteNoteRepo := repo.NewDeleteNoteRepo(DB)
+	shareNoteRepo := repo.NewShareNoteRepo(DB)
 
 	loginService := service.NewLoginService(loginRepo)
 	signUpService := service.NewSignupService(signUpRepo, loginService)
 	getNotesService := service.NewGetNotesRepo(getNotesRepo)
 	upsertNoteService := service.NewUpsertNoteService(upsertNoteRepo)
+	deleteNoteService := service.NewDeleteNoteService(deleteNoteRepo)
+	shareNoteService := service.NewShareNoteService(shareNoteRepo)
 
 	signUpHandler := handlers.NewSignUpHandler(signUpService)
 	loginHandler := handlers.NewLoginHandler(loginService)
 	getNotesHandler := handlers.NewGetNotesHandler(getNotesService)
 	upsertNoteHandler := handlers.NewUpsertNoteHandler(upsertNoteService)
+	deleteNoteHandler := handlers.NewDeleteNoteHandler(deleteNoteService)
+	shareNoteHandler := handlers.NewShareNoteHandler(shareNoteService)
 
 	handler = new(Handler)
 	handler.SignUpHandler = signUpHandler
 	handler.LoginHandler = loginHandler
 	handler.GetNotesHandler = getNotesHandler
 	handler.UpsertNoteHandler = upsertNoteHandler
+	handler.DeleteNoteHandler = deleteNoteHandler
+	handler.ShareNoteHandler = shareNoteHandler
 }
