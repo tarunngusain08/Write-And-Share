@@ -33,5 +33,6 @@ func main() {
 		notes.PUT("/:id", handler.UpsertNoteHandler.UpsertNote)
 		notes.DELETE("/:id", handler.DeleteNoteHandler.DeleteNote)
 		notes.POST("/:id/share", handler.ShareNoteHandler.ShareNote)
+		notes.GET("/search?q=:query", handler.SearchNoteHandler.Search)
 	}
 }
