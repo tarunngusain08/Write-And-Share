@@ -7,7 +7,7 @@ type LoginRequest struct {
 	Password string
 }
 
-type GetNotesResponse []*Note
+type NotesList []*Note
 
 type Note struct {
 	Id      int
@@ -18,6 +18,8 @@ type Note struct {
 type GetNotesRequest struct {
 	UserName string
 	NoteId   *string
+	PageNum  *int
+	PageSize *int
 }
 
 type UpsertNoteRequest struct {
@@ -38,4 +40,10 @@ type ShareNoteRequest struct {
 	Username       string
 	NoteId         string
 	ShareUsernames []string
+}
+
+type SearchNoteRequest struct {
+	PageNum  *int
+	PageSize *int
+	Keywords string
 }
