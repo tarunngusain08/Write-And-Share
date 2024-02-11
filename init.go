@@ -14,7 +14,10 @@ const (
 	disable  = "disable"
 )
 
-var handler *Handler
+var (
+	handler         *Handler
+	defaultPageSize = 10
+)
 
 type Handler struct {
 	*handlers.SignUpHandler
@@ -23,6 +26,7 @@ type Handler struct {
 	*handlers.UpsertNoteHandler
 	*handlers.DeleteNoteHandler
 	*handlers.ShareNoteHandler
+	*handlers.SearchNoteHandler
 }
 
 func initDB() (*sql.DB, error) {
@@ -53,6 +57,7 @@ func init() {
 	upsertNoteRepo := repo.NewUpsertNoteRepo(DB)
 	deleteNoteRepo := repo.NewDeleteNoteRepo(DB)
 	shareNoteRepo := repo.NewShareNoteRepo(DB)
+	searchNoteRepo := repo.NewSearchNoteRepo(DB)
 
 	loginService := service.NewLoginService(loginRepo)
 	signUpService := service.NewSignupService(signUpRepo, loginService)
@@ -60,13 +65,15 @@ func init() {
 	upsertNoteService := service.NewUpsertNoteService(upsertNoteRepo)
 	deleteNoteService := service.NewDeleteNoteService(deleteNoteRepo)
 	shareNoteService := service.NewShareNoteService(shareNoteRepo)
+	searchNoteService := service.NewSearchNoteService(searchNoteRepo)
 
 	signUpHandler := handlers.NewSignUpHandler(signUpService)
 	loginHandler := handlers.NewLoginHandler(loginService)
-	getNotesHandler := handlers.NewGetNotesHandler(getNotesService)
+	getNotesHandler := handlers.NewGetNotesHandler(getNotesService, &defaultPageSize)
 	upsertNoteHandler := handlers.NewUpsertNoteHandler(upsertNoteService)
 	deleteNoteHandler := handlers.NewDeleteNoteHandler(deleteNoteService)
 	shareNoteHandler := handlers.NewShareNoteHandler(shareNoteService)
+	searchNoteHandler := handlers.NewSearchNoteHandler(searchNoteService, &defaultPageSize)
 
 	handler = new(Handler)
 	handler.SignUpHandler = signUpHandler
@@ -75,4 +82,5 @@ func init() {
 	handler.UpsertNoteHandler = upsertNoteHandler
 	handler.DeleteNoteHandler = deleteNoteHandler
 	handler.ShareNoteHandler = shareNoteHandler
+	handler.SearchNoteHandler = searchNoteHandler
 }
