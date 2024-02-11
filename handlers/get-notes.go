@@ -9,17 +9,19 @@ import (
 )
 
 type GetNotesHandler struct {
-	service *service.GetNotesService
+	service         *service.GetNotesService
+	defaultPageSize *int
 }
 
-func NewGetNotesHandler(notesService *service.GetNotesService) *GetNotesHandler {
+func NewGetNotesHandler(notesService *service.GetNotesService, defaultPageSize *int) *GetNotesHandler {
 	return &GetNotesHandler{
 		notesService,
+		defaultPageSize,
 	}
 }
 
 func (g *GetNotesHandler) GetAllNotes(ctx *gin.Context) {
-	var user *contracts.GetNotesRequest
+	var request *contracts.GetNotesRequest
 	claims, err := middlewares.ExtractTokenClaimsFromHeader(ctx.Request)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, err)
@@ -31,9 +33,12 @@ func (g *GetNotesHandler) GetAllNotes(ctx *gin.Context) {
 		ctx.JSON(http.StatusUnauthorized, "Unauthorized")
 		return
 	}
-	user.UserName = username
+	request.UserName = username
+	if request.PageSize == nil {
+		request.PageSize = g.defaultPageSize
+	}
 
-	notes, err := g.service.GetNotes(user)
+	notes, err := g.service.GetNotes(request)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err)
 		return
@@ -43,7 +48,7 @@ func (g *GetNotesHandler) GetAllNotes(ctx *gin.Context) {
 }
 
 func (g *GetNotesHandler) GetNotesById(ctx *gin.Context) {
-	var user *contracts.GetNotesRequest
+	var request *contracts.GetNotesRequest
 	claims, err := middlewares.ExtractTokenClaimsFromHeader(ctx.Request)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, err)
@@ -56,11 +61,11 @@ func (g *GetNotesHandler) GetNotesById(ctx *gin.Context) {
 		return
 	}
 
-	user.UserName = username
+	request.UserName = username
 	noteId := ctx.Param("id")
-	user.NoteId = &noteId
+	request.NoteId = &noteId
 
-	notes, err := g.service.GetNotes(user)
+	notes, err := g.service.GetNotes(request)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err)
 		return
