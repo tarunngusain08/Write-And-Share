@@ -3,6 +3,7 @@ package repo
 import (
 	"Write-And-Share/contracts"
 	"database/sql"
+	"strings"
 )
 
 type SearchNoteRepo struct {
@@ -19,9 +20,13 @@ ORDER BY timestamp DESC
 LIMIT $2 OFFSET $3;`
 
 func (l *SearchNoteRepo) SearchNote(request *contracts.SearchNoteRequest) (*contracts.NotesList, error) {
+
 	page := *request.PageNum
 	pageSize := *request.PageSize
 	offset := (page - 1) * pageSize
+
+	request.Keywords = strings.Join(strings.Split(request.Keywords, " "), " | ")
+
 	res, err := l.db.Query(searchNotes, request.Keywords, pageSize, offset)
 	if err != nil {
 		return nil, err
