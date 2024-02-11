@@ -11,7 +11,6 @@ Users should be able to perform CRUD operations on notes, share them, and search
 - Use a database for data storage (preferably MongoDB or PostgreSQL).
 - Implement any authentication protocol with rate limiting and request throttling.
 - Implement efficient search functionality, preferably using text indexing for high performance.
-- Write unit tests for API endpoints using a testing framework.
 
 ### API Endpoints
 
