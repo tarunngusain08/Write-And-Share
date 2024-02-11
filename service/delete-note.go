@@ -9,7 +9,7 @@ type DeleteNoteService struct {
 	repo *repo.DeleteNoteRepo
 }
 
-func NewDeleteNoteRepo(notesRepo *repo.DeleteNoteRepo) *DeleteNoteService {
+func NewDeleteNoteService(notesRepo *repo.DeleteNoteRepo) *DeleteNoteService {
 	return &DeleteNoteService{notesRepo}
 }
 
