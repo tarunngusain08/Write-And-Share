@@ -13,7 +13,7 @@ func NewGetNotesRepo(notesRepo *repo.GetNotesRepo) *GetNotesService {
 	return &GetNotesService{notesRepo}
 }
 
-func (g *GetNotesService) GetNotes(request *contracts.GetNotesRequest) (*contracts.GetNotesResponse, error) {
+func (g *GetNotesService) GetNotes(request *contracts.GetNotesRequest) (*contracts.NotesList, error) {
 	switch request.NoteId {
 	case nil:
 		return g.repo.GetAllNotes(request)
