@@ -92,6 +92,7 @@ INSERT INTO notes_to_user_mapping (note_id, username) VALUES
 ```
 
 ### Creating a GIN Index
+
 To improve search performance on the `title` column of the `notes` table, you can create a GIN (Generalized Inverted Index) index using the `to_tsvector` function.
 ```sql
 CREATE INDEX title_idx ON notes USING GIN(to_tsvector('english', title));
@@ -99,6 +100,7 @@ CREATE INDEX title_idx ON notes USING GIN(to_tsvector('english', title));
 This index will tokenize the `title` column using the English text search configuration and build an inverted index for efficient full-text search operations.
 
 ## Explaining a Full-Text Search Query
+
 To understand how PostgreSQL plans to execute a full-text search query on the `notes` table, you can use the `EXPLAIN` command.
 ```sql
 EXPLAIN SELECT id, title FROM notes WHERE to_tsvector('english', title) @@ to_tsquery('english', 'keyword');
